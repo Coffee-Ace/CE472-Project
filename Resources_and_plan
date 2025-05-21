@@ -1,0 +1,111 @@
+For this project we will need the following:
+PC 
+Unreal engine 5
+Android studio 2024.1.2.12
+Android APK 34 and NDK 26
+Java JDK 17
+Android device
+usb c cable
+
+
+
+
+userfull resources:
+https://dev.epicgames.com/documentation/en-us/unreal-engine/advanced-setup-and-troubleshooting-guide-for-using-android-sdk
+https://dev.epicgames.com/documentation/en-us/unreal-engine/setting-up-a-new-ar-project-in-unreal-engine
+https://dev.epicgames.com/documentation/en-us/unreal-engine/handheld-ar-template-quickstart-in-unreal-engine
+https://www.youtube.com/watch?v=5DA0ILJIGLY 
+https://www.youtube.com/watch?v=mZ0yHY3X6OQ 
+https://www.youtube.com/watch?v=gsTX6VsSGfE 
+
+
+
+Origonal Project plan:
+## Overview
+This guide outlines the steps to create a simple AR art gallery application using Unreal Engine 5. The application will allow users to place virtual artworks in their real-world environment, walk around them, and interact with them.
+
+## Prerequisites
+- Unreal Engine 5.3+ installed
+- Basic understanding of Unreal Engine Blueprint system
+- Mobile device with AR capabilities (iOS with ARKit or Android with ARCore)
+- Art assets for your gallery (can use placeholder images initially)
+
+## Step 1: Project Setup
+
+1. Open Unreal Engine and create a new project:
+   - Select "Games" as the category
+   - Choose "Blank" as the template
+   - Select "Mobile/Tablet" as the target platform
+   - Enable "Starter Content"
+   - Set project location and name (e.g., "ARGallery")
+   - Click "Create Project"
+
+2. Configure project settings for AR:
+   - Go to "Edit > Project Settings"
+   - Under "Platforms > iOS" or "Platforms > Android":
+     - Enable "Support ARKit" (iOS) or "Support ARCore" (Android)
+     - Set "Minimum iOS/Android Version" compatible with AR
+   - Under "Engine > Rendering":
+     - Enable "Mobile HDR"
+   - Save settings
+
+## Step 2: Creating the AR Foundation
+
+1. Create an AR Game Mode:
+   - In Content Browser, create a new Blueprint based on "Game Mode Base"
+   - Name it "BP_ARGalleryGameMode"
+
+2. Create an AR Pawn:
+   - Create a new Blueprint based on "Pawn"
+   - Name it "BP_ARGalleryPawn"
+   - Add a "ARCameraComponent" to the pawn
+   - Add a "Scene Component" as the root component
+
+3. Configure the Game Mode:
+   - Open "BP_ARGalleryGameMode"
+   - Set Default Pawn Class to "BP_ARGalleryPawn"
+   - Save and compile
+
+4. Set up AR Session:
+   - Create a new Blueprint based on "AR Session Config"
+   - Name it "BP_ARSessionConfig"
+   - Configure settings:
+     - Set "World Alignment" to "Gravity"
+     - Enable "Should Optimize for Memory Usage"
+     - Enable "Get Camera Image"
+     - Enable "Generate Mesh Data from Tracked Geometry"
+
+## Step 3: Creating the Art Gallery Content
+
+1. Prepare Art Assets:
+   - Import your artwork images to the Content Browser
+   - Create a new folder named "ArtGallery"
+   - Import images or use placeholder images
+
+2. Create Frame Blueprint:
+   - Create a new Blueprint named "BP_ArtFrame"
+   - Add a "Static Mesh Component" (use a simple plane or frame mesh)
+   - Add a "Material" for the frame
+   - Create a variable "ArtworkTexture" of type "Texture2D"
+   - In the Construction Script:
+     - Create a Dynamic Material Instance from your base material
+     - Set the artwork texture parameter
+
+3. Create Art Collection Manager:
+   - Create a new Blueprint named "BP_ArtCollectionManager"
+   - Add variables for storing artwork data (title, artist, description)
+   - Create functions for retrieving artwork information
+
+## Step 4: AR Placement System
+
+1. Create AR Placement Interface:
+   - Create a widget Blueprint named "WBP_ARPlacementUI"
+   - Add buttons for "Place Artwork," "Move Artwork," "Delete Artwork"
+   - Design a simple, clean interface suitable for mobile
+
+2. Implement Placement Logic in Pawn:
+   - Open "BP_ARGalleryPawn"
+   - Create the following functions:
+     - TraceForARPlacement: Performs a hit test against AR tracked planes
+     - PlaceArtwork: Spawns an artwork at the traced location
+     - MoveArtwork: Allows repositioning of placed artwork
